@@ -1,0 +1,183 @@
+﻿<Window x:Class="WeatherApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeatherApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="425" Width="250"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
+    <!--Разметка грида-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        
+        <!--Фон приложения-->
+        <Border Width="250"
+                Height="425"
+                CornerRadius="20"
+                Background="{StaticResource cs_BackGround}"
+                BorderBrush="{StaticResource cs_BorderBrush}"
+                BorderThickness="3"
+                Grid.RowSpan="4"
+                Grid.ColumnSpan="3"/>
+
+        <!--Подложка под метрики погоды и основной UI-->
+        <Border Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="3"
+                Margin="10"
+                CornerRadius="20 20 0 0"
+                Background="{StaticResource cs_BackGround}"/>
+
+        <!--Поиск города-->
+        <Border Grid.Row="4"
+                Grid.ColumnSpan="3"
+                Margin="10 0 10 10"
+                CornerRadius="0 0 20 20"
+                Background="{StaticResource cs_BackGround}"/>
+        
+        <!--Кнопка выхода-->
+        <Button Grid.Column="2"
+                Style="{StaticResource CloseButtonStyle}"
+                Click="Button_Click"/>
+        
+        <!--Иконка гео с наименованием-->
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0 40 0 0">
+            <Image Source="/Images/location.png"
+                   Height="25"
+                   HorizontalAlignment="Right"/>
+            <Label x:Name="lblCityName"
+                   Content="- - -"
+                   FontFamily="Roboto"
+                   FontSize="15"
+                   Foreground="{StaticResource cs_Text}"
+                   HorizontalAlignment="Left"/>
+        </StackPanel>
+        
+        <!--Текущее время + погода-->
+        <StackPanel Grid.Row="1"
+                    Grid.ColumnSpan="3">
+            <Label x:Name="lblDigitalClock"
+                   FontSize="9"
+                   FontFamily="Roboto"
+                   Foreground="{StaticResource cs_BBackGround}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="{Binding Path=Now, StringFormat='{}{0:hh:mm:ss tt}'}"/>
+
+            <Border Margin="10"
+                    Background="{StaticResource cs_BBackGround}"
+                    Height="100"
+                    Width="100"
+                    CornerRadius="10"
+                    Opacity="0.75">
+                <Image x:Name="imgWeatherIcon"
+                       Height="80"
+                       Width="80"
+                       SnapsToDevicePixels="True"/>
+            </Border>
+
+            <Label x:Name="lblCondition"
+                   Content="- - -"
+                   HorizontalAlignment="Center"
+                   FontFamily="Roboto"
+                   FontSize="10"
+                   Foreground="{StaticResource cs_Text2}"/>
+        </StackPanel>
+        
+        <!--Метрики: Температура-->
+        <StackPanel Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="10">
+            
+            <Image Source="/Images/temperature.png"
+                   Height="25"/>
+            
+            <Label x:Name="lblTemperature"
+                   Content="- - -"
+                   FontFamily="Roboto"
+                   FontSize="11"
+                   FontWeight="Black"
+                   Foreground="{StaticResource cs_Text}"
+                   HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!--Метрики: Скорость ветра-->
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Margin ="10">
+            
+            <Image Source="/Images/windspeed.png"
+                   Height="25"/>
+            
+            <Label x:Name="lblWindSpeed"
+                   Content="- - -"
+                   FontFamily="Roboto"
+                   FontSize="11"
+                   FontWeight="Black"
+                   Foreground="{StaticResource cs_Text}"
+                   HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!--Метрики: Влажность-->
+        <StackPanel Grid.Row="2"
+                    Grid.Column="3"
+                    Margin="10">
+            
+            <Image Source="/Images/humidity.png"
+                   Height="25"/>
+            
+            <Label x:Name="lblHumidity"
+                   Content="- - -"
+                   FontFamily="Roboto"
+                   FontSize="11"
+                   FontWeight="Black"
+                   Foreground="{StaticResource cs_Text}"
+                   HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!--TextBox: Название города-->
+
+        <StackPanel  Grid.Row="3"
+                     Grid.ColumnSpan="3"
+                     Margin="0 20 0 0">
+            <TextBox Height="35"
+                     Width="200"
+                     x:Name="txtCityName"
+                     Style="{StaticResource tbox_Txt}"
+                     HorizontalAlignment="Center"
+                     FontWeight="Light"
+                     Tag="Введите название города..." TextChanged="txtCityName_TextChanged"/>
+
+            <Button Height="35"
+                    Width="200"
+                    Margin="10"
+                    x:Name="btnGetWeather"
+                    Content="Узнать погоду"
+                    Click="btnGetWeather_Click"
+                    FontFamily="Roboto"
+                    FontSize="11"
+                    FontWeight="Bold"
+                    Style="{StaticResource RoundedButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+</Window>
